@@ -57,14 +57,24 @@ def process_file(file, music, feature):
     
     if(len(df) not in range(1500, 6000)):
         return pd.DataFrame()
-            
+    
+    processed_df = pd.DataFrame()
+
     for column in df.columns:
         #column = df.columns[i]
-        processed_df = get_1sec_frames(pd.Series.tolist(df[column]), feature)
+        new_df = get_1sec_frames(pd.Series.tolist(df[column]), column)
+        processed_df[column + "_mean"] = new_df["mean"]
+        processed_df[column + "_var"] = new_df["var"]
+        
+        if column == 'energy_0':
+            processed_df["rms"] = new_df["rms"]
+            processed_df["autocorrelation_1"] = new_df["autocorrelation_1"]
+            processed_df["autocorrelation_2"] = new_df["autocorrelation_2"]
     
     #Create column with file name and music x speech classification
     file = [file] * len(processed_df.index);
     music = [music] * len(processed_df.index);
+    processed_df.insert(0, 'frame', list(range(0,len(processed_df.index))))
     processed_df.insert(0, 'file', file)
     processed_df.insert(0, 'music', music)
     
@@ -78,33 +88,35 @@ def get_file(file, feature):
 
     #Skip Yaafe initial rows
     df = pd.read_csv(path, skiprows=range(0, 4), header = 0).reset_index()
- 
-    if('index' in df.columns):
+
+    if('index' in df.columns and feature not in ['mfcc', 'lpc', 'spectralShapeStatistics']):
         df = df.drop('index', 1)
-    
+
+    df = df.dropna(0)
+
     #Add columns names
     columns = []
     for i in range(0, len(df.columns)):
         columns.append('{}_{}'.format(feature, i))
         
     df.columns = columns
-
+    
     #Make sure all values are numeric
     for i in range(0, len(df.columns)):
         df[columns[i]] = df[columns[i]].apply(pd.to_numeric)
     
     return df
 
-def get_1sec_frames(col, feature):
+def get_1sec_frames(col, column_name):
     '''
     Calculate 1 second frames:
     Group 2 * config['FRAME_SIZE'] / config['SEG_SIZE'] points (currently 100 points)
     by calculating the group mean and variance.
     ''' 
     filtered_df_index = round(len(col) / (2 * config['FRAME_SIZE'] / config['SEG_SIZE']))  
-    columns = ["frame", feature + "_mean", feature + "_var"]
+    columns = ["mean", "var"]
     
-    if feature == 'energy':
+    if column_name == 'energy_0':
         columns += ['low_energy_proportion', 'rms']
         
     filtered_df = pd.DataFrame(0, index=range(0, filtered_df_index), columns=columns)
@@ -119,12 +131,12 @@ def get_1sec_frames(col, feature):
             mean = st.mean(frame)
             variance = st.variance(frame)
             
-            if feature == 'energy':
+            if column_name == 'energy_0':
                 rms = variance / (mean * mean)
                 proportion = check_energy(frame, mean)
-                values = [point, mean, variance, proportion, rms]
+                values = [mean, variance, proportion, rms]
             else:
-                values = [point, mean, variance]
+                values = [mean, variance]
                 
             filtered_df.loc[point] = values
             
@@ -132,7 +144,7 @@ def get_1sec_frames(col, feature):
             point += 1
             frame.append(value)
     
-    if feature == 'energy':
+    if column_name == 'energy_0':
         a = autocorr(filtered_df['rms'], 'full')
         filtered_df['autocorrelation_1'] = a
         a = autocorr(filtered_df['rms'], 'same')
@@ -167,3 +179,5 @@ def autocorr(x, mode):
     if mode == 'same':
         return result
     return result[int(len(result)/2):]
+
+main()
