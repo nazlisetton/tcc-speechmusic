@@ -5,8 +5,6 @@
     "FEATURES": ["energy", "zeroCrossing", "spectralFlux", "spectralRollof", "perceptualSharpness", "spectralShapeStatistics", "lpc", "mfcc"],
     "PLOTS_PATH": "../../plots/",
     "DATASET": "../../preprocessed-data/dataset.csv",
-    "BIVAR_PLOTS_FEATURES": "../../plots/norm/bivar_features/",
-    "BIVAR_FEATURE_TARGET": "../../plots/norm/bivar_music/",
     "SEG_SIZE": 20,
     "FRAME_SIZE": 1000
 }
