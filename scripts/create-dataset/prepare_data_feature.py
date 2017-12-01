@@ -67,6 +67,7 @@ def process_file(file, music, feature):
         processed_df[column + "_var"] = new_df["var"]
         
         if column == 'energy_0':
+            processed_df["low_energy_proportion"] = new_df["low_energy_proportion"]
             processed_df["rms"] = new_df["rms"]
             processed_df["autocorrelation_1"] = new_df["autocorrelation_1"]
             processed_df["autocorrelation_2"] = new_df["autocorrelation_2"]
@@ -179,5 +180,3 @@ def autocorr(x, mode):
     if mode == 'same':
         return result
     return result[int(len(result)/2):]
-
-main()

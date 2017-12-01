@@ -28,8 +28,6 @@ PRÉ-PROCESSAMENTO - Partes 1 e 2:
 '''
 
 def join_data(files):
-    '''
-    '''
     dataset = pd.DataFrame()
     
     for file in files:
@@ -53,5 +51,5 @@ files = []
 for feature in config['FEATURES']:
     files.append(feature + ".csv")
 
-#prep.main()
+prep.main()
 dataset = join_data(files)
