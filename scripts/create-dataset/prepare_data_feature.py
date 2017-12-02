@@ -69,8 +69,7 @@ def process_file(file, music, feature):
         if column == 'energy_0':
             processed_df["low_energy_proportion"] = new_df["low_energy_proportion"]
             processed_df["rms"] = new_df["rms"]
-            processed_df["autocorrelation_1"] = new_df["autocorrelation_1"]
-            processed_df["autocorrelation_2"] = new_df["autocorrelation_2"]
+            processed_df["autocorrelation"] = new_df["autocorrelation"]
     
     #Create column with file name and music x speech classification
     file = [file] * len(processed_df.index);
@@ -147,9 +146,7 @@ def get_1sec_frames(col, column_name):
     
     if column_name == 'energy_0':
         a = autocorr(filtered_df['rms'], 'full')
-        filtered_df['autocorrelation_1'] = a
-        a = autocorr(filtered_df['rms'], 'same')
-        filtered_df['autocorrelation_2'] = a
+        filtered_df['autocorrelation'] = a
         
     return filtered_df
 

@@ -82,5 +82,7 @@ dataset = pd.read_csv(config['DATASET'])
 dataset = dataset.drop(['file', 'frame'], axis = 1)
 
 corr = calc_correlation(dataset)
+
+plt.rcParams.update({'font.size': 14})
 plot_corr_music(corr)
 plot_corr_matrix(dataset, corr)
