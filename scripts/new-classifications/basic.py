@@ -8,8 +8,12 @@ Created on Sun Dec  3 11:08:49 2017
 '''
 NOVAS CLASSIFICAÇÕES:
     FUNÇOES COMUNS:
-        - cv_scores
-
+        - get_files
+        - get_1sec_frames
+        - get_sample_avg_var
+        - remove_outliers
+        - autocorr
+        - check_results
 '''
 
 import pandas as pd
@@ -112,3 +116,14 @@ def remove_outliers(prediction):
 def autocorr(x, mode):
     result = np.correlate(x, x, mode=mode)
     return result[int(len(result)/2):]
+
+def check_results(df, pcts, file):
+    '''
+    Check results for "check-model-with-music".
+    The expected results are 1. 
+    Compare real results with what was expected.
+    '''
+    ones = np.count_nonzero(df['predicted'][1:] == 1)
+    pct = ones/len(df['predicted'][1:])
+    pcts[file] = pct
+    print(pct)

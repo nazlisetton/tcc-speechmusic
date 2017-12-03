@@ -15,8 +15,7 @@ NOVAS CLASSIFICAÇÕES:
 import pickle
 import json
 import pandas as pd
-import numpy as np
-from basic import get_files, get_1sec_frames, autocorr, remove_outliers
+from basic import get_files, get_1sec_frames, autocorr, remove_outliers, check_results
 
 with open('../config.json') as json_data:
     config = json.load(json_data)
@@ -65,10 +64,7 @@ def main():
         df.columns = ['predicted']
         
         #check results with what was expected (1)
-        ones = np.count_nonzero(df['predicted'][1:] == 1)
-        pct = ones/len(df['predicted'][1:])
-        pcts[file] = pct
-        print(pct)
+        check_results(df, pcts, file)
 
     total = 0
     count = 0
