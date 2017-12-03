@@ -7,7 +7,11 @@ Created on Sat Nov 28 21:09:10 2017
 '''
 CLASSIFICADORES:
     FUNÇOES COMUNS:
-        - cv_scores: calcula resultados de validação cruzada com método k_fold
+        - cv_scores
+        - test_features_by_ranking
+        - validate
+        - filter_file
+        - rank params
 '''
 
 import json
