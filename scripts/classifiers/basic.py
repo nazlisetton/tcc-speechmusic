@@ -79,7 +79,7 @@ def cv_scores(X, y, clf, kf, clf_name):
             
     return f1, precision, recall, accuracy, matthews
 
-def test_features_by_ranking(dataset, y, clf, kf):
+def test_features_by_ranking(dataset, y, clf, kf, clf_name):
     ''' 
     This method is responsible for one iteration of the ranking algorithm.
     It tests all unused features combined with the already chosen features, 
@@ -105,7 +105,7 @@ def test_features_by_ranking(dataset, y, clf, kf):
             global_results[feature]['accuracy'] = a
             global_results[feature]['matt'] = m
                       
-    file_name = './results_svm/results_' + str(len(FEATURES)) + '.txt'
+    file_name = './results_{}/results_{}.txt'.format(clf_name, len(FEATURES))
             
     with open(file_name, 'w') as outfile:
         json.dump(global_results, outfile)
@@ -168,4 +168,12 @@ def filter_file(dic, file):
     print(first_acc)
     
     return first_f[0], first_acc[0], first_f[1], first_acc[1]
+
+def rank_params(results):
+    '''
+    Rank parameters by f-measure
+    Input: dictionary with models results for different choices of parameters
+    Output: ordered list of parameters (best parameters appear first)
+    '''
+    return [(k, results[k]) for k in sorted(results, key=results.get, reverse=True)]
     

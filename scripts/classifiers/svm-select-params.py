@@ -4,13 +4,12 @@ Created on Sun Jul 16 11:46:29 2017
 @author: Nazli
 """
 
-#Import Library
 import pandas as pd
 from sklearn import svm
 import json
 from sklearn.model_selection import KFold
 import numpy as np
-from basic import cv_scores
+from basic import cv_scores, rank_params
 
 '''
 SVM:
@@ -20,7 +19,7 @@ SVM:
 with open('../config.json') as json_data:
     config = json.load(json_data)
    
-def svc_param_selection(X, y, kf):
+def svm_param_selection(X, y, kf):
     '''
         Test all combinations of Cs and gammas chosen and 
         add results to a dictionary.
@@ -61,12 +60,6 @@ def svc_param_selection(X, y, kf):
             
     return results, dic_2
 
-def rank_params(results):
-    '''
-        Rank parameters by f-measure
-    '''
-    return [(k, results[k]) for k in sorted(results, key=results.get, reverse=True)]
-
 dataset = pd.read_csv(config['DATASET'])
 dataset = dataset.drop(['file', 'frame'], axis=1)
 dataset = dataset.sample(frac=1).reset_index(drop=True)
@@ -81,8 +74,8 @@ X = dataset[['low_energy_proportion', 'mfcc_2_var', 'mfcc_3_var',
               'mfcc_1_mean']]
 
 X = X.values
-results, dic_2 = svc_param_selection(X, y, kf)
+results, dic_2 = svm_param_selection(X, y, kf)
 sorted_params = rank_params(dic_2)
 
-with open('./results_svm/params_results_2.json', 'w') as file:
+with open('./results_svm/params_results.json', 'w') as file:
     config = json.dump(dic_2, file)

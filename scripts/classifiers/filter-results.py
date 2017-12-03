@@ -17,7 +17,7 @@ from basic import filter_file
 #Number of the last results_file in folder './results_[algo]/
 last_file = 38
 #it may be: knn, svm, nn
-algorithm = "svm" 
+algorithm = "svm"
 #############################################################
 
 def main(last_file, algorithm):

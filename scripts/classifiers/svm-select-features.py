@@ -34,7 +34,7 @@ def main():
     kf = KFold(n_splits=2, shuffle=True)
 
     ''' 
-    Let's try to find the best features for a model.
+    Let's try to find the best set of features for a model.
     We use test_features_by_ranking and valide methods for that.
     
     We start by testing each feature and calculating the 
@@ -45,7 +45,7 @@ def main():
     It is basically a ranking algorithm.
     ''' 
     for i in range(0, len(dataset.columns)):
-       results = test_features_by_ranking(dataset, y, clf, kf)
+       results = test_features_by_ranking(dataset, y, clf, kf, 'svm')
        validate(results)
 
 main()
