@@ -12,16 +12,16 @@ Grande parte do projeto é formada por scripts independentes que fazem tarefas i
 
 A seguir uma breve explicação da organização do repositório:
 ##### Pasta audio-data:
-Contém os arquivos ".csv" que são output do YAAFE e foram utilizamos para criar o dataset original do projeto. Temos um arquivo por áudio gravado por característica extraída. Aqui constam apenas os arquivos ".csv' relativos a um áudio para exemplo, já que o conjunto dos arquivos é muito grande.
+Contém os arquivos CSV que são output do YAAFE e foram utilizamos para criar o dataset original do projeto. Temos um arquivo por áudio gravado por característica extraída. Aqui constam apenas os arquivos CSV relativos a um áudio para exemplo, já que o conjunto dos arquivos é muito grande.
 
 ##### Pasta music-csv:
-Contém outros arquivos ".csv" que são output do YAAFE. São arquivos apenas de músicas que foram utilizados para fazer uma segunda validação dos modelos depois de criados.
+Contém outros arquivos CSV que são output do YAAFE. São arquivos apenas de músicas que foram utilizados para fazer uma segunda validação dos modelos depois de criados.
 
 ##### Pasta plots:
 Contém gráficos feitos na fase de exploração visual dos dados, como gráficos de densidade e matrizes de correlação.
 
 ##### Pasta preprocessed-data:
-Contém arquivos ".csv" do dataset unificados por features. Na prática, é uma sumarização dos arquivos de audio-data. O arquivo dataset.csv é o dataset final utilizado para criar e testar os classificadores.
+Contém arquivos CSV do dataset unificados por features. Na prática, é uma sumarização dos arquivos de audio-data. O arquivo dataset.csv é o dataset final utilizado para criar e testar os classificadores.
 
 ##### Pasta scripts:
 Contém a parte principal do projeto, com todos os scripts utilizados. Existem as seguintes subpastas:
@@ -36,4 +36,4 @@ Todos os arquivos estão comentados e são praticamente independentes uns dos ou
 # Dados
 Quase todos os dados do projeto foram coletados de rádios brasileiras a partir de seus serviços de streaming. Para testes posteriores, foram usados também um dataset de fala do Marsyas (Music Speech: http://marsyasweb.appspot.com/download/data_sets/)
 # API
-Para liberar o acesso externo ao projeto, foi desenvolvida também uma API. Link para repositório do GitHub da API:
+Para liberar o acesso externo ao projeto, foi desenvolvida também uma API. Link para repositório do GitHub da API: https://github.com/felipemalbergier/api-tcc
